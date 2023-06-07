@@ -1,0 +1,12 @@
+
+1684985818939 :: orderBook ::  :: 1684985819412 :: {'s': 'ok', 'code': 200, 'message': '', 'orderBook': []}
+
+1684985819412 :: tradebook :: None :: 1684985819727 :: {'s': 'ok', 'code': 200, 'message': '', 'tradeBook': []}
+
+1684985841960 :: orderBook ::  :: 1684985842179 :: {'s': 'ok', 'code': 200, 'message': '', 'orderBook': []}
+
+1684985842179 :: tradebook :: None :: 1684985842367 :: {'s': 'ok', 'code': 200, 'message': '', 'tradeBook': []}
+
+1684986304153 :: quotes :: {'symbols': 'NSE:NIFTY23MAY18300CE,NSE:NIFTY23MAY18300PE'} :: 1684986304340 :: {'s': 'ok', 'd': [{'n': 'NSE:NIFTY23MAY18300CE', 's': 'ok', 'v': {'ch': -12.2, 'chp': -32.53, 'lp': 25.3, 'spread': 0.15, 'ask': 25.45, 'bid': 25.3, 'open_price': 33.0, 'high_price': 33.0, 'low_price': 18.7, 'prev_close_price': 37.5, 'volume': 4122500, 'short_name': 'NIFTY23MAY18300CE', 'exchange': 'NSE', 'description': 'NSE:NIFTY23MAY18300CE', 'original_name': 'NSE:NIFTY23MAY18300CE', 'symbol': 'NSE:NIFTY23MAY18300CE', 'fyToken': '101123052573629', 'tt': 1684972800, 'cmd': {'t': 1684986300, 'o': 42.1, 'h': 33.0, 'l': 18.7, 'c': 25.3, 'v': 4122500, 'tf': '9:15'}}}, {'n': 'NSE:NIFTY23MAY18300PE', 's': 'ok', 'v': {'ch': 10.45, 'chp': 23.15, 'lp': 55.6, 'spread': 0.15, 'ask': 55.75, 'bid': 55.6, 'open_price': 50.0, 'high_price': 63.95, 'low_price': 43.0, 'prev_close_price': 45.15, 'volume': 3385150, 'short_name': 'NIFTY23MAY18300PE', 'exchange': 'NSE', 'description': 'NSE:NIFTY23MAY18300PE', 'original_name': 'NSE:NIFTY23MAY18300PE', 'symbol': 'NSE:NIFTY23MAY18300PE', 'fyToken': '101123052573630', 'tt': 1684972800, 'cmd': {'t': 1684986300, 'o': 50.0, 'h': 63.95, 'l': 43.0, 'c': 55.6, 'v': 3385150, 'tf': '9:15'}}}]}
+
+1684986304356 :: place_order ::  :: 1684986304657 :: {'s': 'ok', 'code': 1101, 'message': 'Order Submitted Successfully. Your Order Ref. No. 23052500004230', 'id': '23052500004230-BO-1'}
