@@ -3,21 +3,24 @@ import time
 import logging
 import pandas as pd
 
-from fyers_api import fyersModel
-from fyers_api import accessToken
+from fyers_apiv3 import fyersModel
 from nsepython import nse_optionchain_scrapper
+from dotenv import load_dotenv
+import os
 
-CLIENT = "8K2VKFQ8AN-100"
-SECRET = "HO485IW2QG"
-REDIRECT_URL = "http://127.0.0.1:8000"
-LOG_PATH = r"fyers_log"
-SYMBOL = "NIFTY"
+load_dotenv()
+
+CLIENT = os.getenv('CLIENT')
+SECRET = os.getenv('SECRET')
+REDIRECT_URL = os.getenv('REDIRECT_URL')
+LOG_PATH = os.getenv('LOG_PATH')
+SYMBOL = os.getenv('SYMBOL')
 
 # Trade Settings
-QTY = 50
+QTY = 75
 LIMIT_OFFSET = 10
-SL = 7
-PT = SL * 3
+SL = 10
+PT = SL * 1
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
@@ -43,7 +46,7 @@ def find_symbol(strike: float):
 class Auth:
     def __init__(self):
         self.auth_token = None
-        self.session = accessToken.SessionModel(
+        self.session = fyersModel.SessionModel(
             client_id=CLIENT,
             secret_key=SECRET,
             redirect_uri=REDIRECT_URL,
