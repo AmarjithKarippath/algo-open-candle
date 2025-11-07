@@ -13,7 +13,7 @@ load_dotenv()
 CLIENT = os.getenv('CLIENT')
 SECRET = os.getenv('SECRET')
 REDIRECT_URL = os.getenv('REDIRECT_URL')
-LOG_PATH = os.getenv('LOG_PATH')
+LOG_PATH = r"{}".format(os.getenv('LOG_PATH'))
 SYMBOL = os.getenv('SYMBOL')
 
 # Trade Settings
