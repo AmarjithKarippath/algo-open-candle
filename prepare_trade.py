@@ -22,7 +22,7 @@ def opening_candle_trade(trader):
     while True:
         try:
             current = datetime.datetime.now(pytz.timezone('Asia/Kolkata')).time()
-            logger.info(f"current ->{current}")
+            # logger.info(f"current ->{current}")
             is_trade_window = time_in_range(start, end, current)
             if is_trade_window:
                 prepare_trade(trader)

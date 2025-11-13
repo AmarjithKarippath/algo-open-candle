@@ -18,7 +18,7 @@ SYMBOL = os.getenv('SYMBOL')
 
 # Trade Settings
 QTY = 75
-LIMIT_OFFSET = 10
+LIMIT_OFFSET = 5
 SL = 10
 PT = SL * 1
 
@@ -31,10 +31,31 @@ def get_nse_data(symbol="NIFTY"):
 
 
 def get_atm_strike(data: dict):
-    ltp = float(data['records']['underlyingValue'])
-    strike_price_list = [x['strikePrice'] for x in data['records']['data']]
-    atm = sorted([[round(abs(ltp - i), 2), i] for i in strike_price_list])[0][1]
-    return float(atm)
+    try:
+        # Check if data has the expected structure
+        if 'records' not in data:
+            logger.error(f"Expected 'records' key not found in data. Available keys: {data.keys()}")
+            raise KeyError("'records' key not found in API response")
+        
+        records = data['records']
+        
+        if 'underlyingValue' not in records:
+            logger.error(f"Expected 'underlyingValue' key not found in records. Available keys: {records.keys()}")
+            raise KeyError("'underlyingValue' key not found in API response")
+        
+        ltp = float(records['underlyingValue'])
+        
+        if 'data' not in records:
+            logger.error(f"Expected 'data' key not found in records. Available keys: {records.keys()}")
+            raise KeyError("'data' key not found in API response")
+        
+        strike_price_list = [x['strikePrice'] for x in records['data']]
+        atm = sorted([[round(abs(ltp - i), 2), i] for i in strike_price_list])[0][1]
+        return float(atm)
+    except KeyError as e:
+        logger.error(f"KeyError in get_atm_strike: {e}")
+        logger.error(f"Full API response: {json.dumps(data, indent=2)}")
+        raise
 
 
 def find_symbol(strike: float):
@@ -78,15 +99,20 @@ class FyersConnect:
         return self.__fyers
 
 def find_atm_symbols():
-    payload = get_nse_data()
-    atm_strike = get_atm_strike(data=payload)
-    logger.info(f"atm -> {atm_strike}")
-    symbols = find_symbol(atm_strike)
-    logger.info(f"symbols -> {symbols}")
-    data = {
-        "symbols": f"{symbols[0]},{symbols[1]}",
-    }
-    return data, symbols
+    try:
+        payload = get_nse_data()
+        logger.debug(f"NSE API Response keys: {payload.keys() if isinstance(payload, dict) else 'Not a dict'}")
+        atm_strike = get_atm_strike(data=payload)
+        logger.info(f"atm -> {atm_strike}")
+        symbols = find_symbol(atm_strike)
+        logger.info(f"symbols -> {symbols}")
+        data = {
+            "symbols": f"{symbols[0]},{symbols[1]}",
+        }
+        return data, symbols
+    except Exception as e:
+        logger.error(f"Error in find_atm_symbols: {e}", exc_info=True)
+        raise
 
 
 def place_trade(trade_symbol, order_p, trader):
@@ -101,7 +127,7 @@ def place_trade(trade_symbol, order_p, trader):
         "stopPrice": 0,
         "disclosedQty": 0,
         "validity": "DAY",
-        "offlineOrder": "False",
+        "offlineOrder": "false",
         "stopLoss": SL,
         "takeProfit": PT
     }
